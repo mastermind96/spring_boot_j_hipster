@@ -16,6 +16,34 @@ public class House {
 
     @Column(name = "house_address")
     private String house_address;
+    @Column(name = "room_numbers")
+    private int roomNumbers;
+
+    @ManyToOne
+    private Girlfriend girlfriend;
+
+    @ManyToOne
+    private Boyfriend boyfriend;
+
+    public Long getHouse_girlfriend_id() {
+        return house_girlfriend_id;
+    }
+
+    public int getRoomNumbers() {
+        return roomNumbers;
+    }
+
+    public void setRoomNumbers(int roomNumbers) {
+        this.roomNumbers = roomNumbers;
+    }
+
+    public Girlfriend getGirlfriend() {
+        return girlfriend;
+    }
+
+    public Boyfriend getBoyfriend() {
+        return boyfriend;
+    }
 
     public void setHouse_girlfriend_id(Long house_girlfriend_id) {
         this.house_girlfriend_id = house_girlfriend_id;
@@ -29,10 +57,6 @@ public class House {
         this.house_address = house_address;
     }
 
-    public void setHouse_rooms(String house_rooms) {
-        this.house_rooms = house_rooms;
-    }
-
     public void setGirlfriend(Girlfriend girlfriend) {
         this.girlfriend = girlfriend;
     }
@@ -41,15 +65,6 @@ public class House {
         this.boyfriend = boyfriend;
     }
 
-    @Column(name = "house_rooms")
-
-    private String house_rooms;
-
-    @ManyToOne
-    private Girlfriend girlfriend;
-
-    @ManyToOne
-    private Boyfriend boyfriend;
 
     public Long getHouse_id() {
         return house_id;
@@ -71,7 +86,4 @@ public class House {
         return house_address;
     }
 
-    public String getHouse_rooms() {
-        return house_rooms;
-    }
 }

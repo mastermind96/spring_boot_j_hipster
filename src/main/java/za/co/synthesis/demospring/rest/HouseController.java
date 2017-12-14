@@ -29,7 +29,7 @@ public class HouseController {
     public List<House>getAllHouses(){return houseRepository.findAll();}
 
     @PostMapping("/add/house/{id}")
-    public ResponseEntity addHouse(@PathVariable(name = "id")Long house_id, HouseDTO houseDTO){
+    public ResponseEntity addHouse(@PathVariable(name = "Identifier")Long house_id, HouseDTO houseDTO){
         if(houseRepository.exists(house_id)){
             return new ResponseEntity("A house with this id already exists.", HttpStatus.BAD_REQUEST);
         }
@@ -37,7 +37,7 @@ public class HouseController {
         house1.setHouse_id(house_id);
         house1.setHouse_boyfriend_id(boyfriendRepository.findOne(houseDTO.getBoyfriend_id()).getId());
         house1.setHouse_girlfriend_id(girlfriendRepository.findOne(houseDTO.getGirlfriend_id()).getId());
-        house1.setHouse_rooms(houseDTO.getHouse_rooms());
+        house1.setRoomNumbers(houseDTO.getHouse_rooms());
         house1.setHouse_address(houseDTO.getHouse_address());
         houseRepository.save(house1);
         return new ResponseEntity(house1,HttpStatus.OK);
