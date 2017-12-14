@@ -16,7 +16,33 @@ public class House {
 
     @Column(name = "house_address")
     private String house_address;
+
+    public void setHouse_girlfriend_id(Long house_girlfriend_id) {
+        this.house_girlfriend_id = house_girlfriend_id;
+    }
+
+    public void setHouse_boyfriend_id(Long house_boyfriend_id) {
+        this.house_boyfriend_id = house_boyfriend_id;
+    }
+
+    public void setHouse_address(String house_address) {
+        this.house_address = house_address;
+    }
+
+    public void setHouse_rooms(String house_rooms) {
+        this.house_rooms = house_rooms;
+    }
+
+    public void setGirlfriend(Girlfriend girlfriend) {
+        this.girlfriend = girlfriend;
+    }
+
+    public void setBoyfriend(Boyfriend boyfriend) {
+        this.boyfriend = boyfriend;
+    }
+
     @Column(name = "house_rooms")
+
     private String house_rooms;
 
     @ManyToOne
