@@ -1,19 +1,20 @@
 package za.co.synthesis.demospring.rest;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import za.co.synthesis.demospring.domain.Boyfriend;
 import za.co.synthesis.demospring.domain.Girlfriend;
 import za.co.synthesis.demospring.dto.GirlfriendDTO;
-import za.co.synthesis.demospring.repository.GirlfriendRepository;
 import za.co.synthesis.demospring.repository.BoyfriendRepository;
+import za.co.synthesis.demospring.repository.GirlfriendRepository;
 
 import java.util.List;
 
-@RestController
-@RequestMapping("/girlfriend")
+@Controller
+@RequestMapping(path = "/girlfriend")
 public class GirlfriendController {
 
     @Autowired
@@ -24,29 +25,26 @@ public class GirlfriendController {
 
     @GetMapping("/all")
     public List<Girlfriend> getAllUsers() {
-        return girlfriendRepository.findAll();
+        return (List<Girlfriend>) girlfriendRepository.findAll();
     }
 
-    @PostMapping("/add/{id}")
-    public ResponseEntity addUser(@PathVariable(name = "id") Long id, GirlfriendDTO girlfriendDTO) {
-        if (girlfriendRepository.exists(id)) {
-            return new ResponseEntity("A user with this id already exists", HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping(path = "/add")
+    public @ResponseBody String addUser(GirlfriendDTO girlfriendDTO) {
         Girlfriend user = new Girlfriend();
-        user.setId(id);
+        user.setId(girlfriendDTO.getId());
         user.setName(girlfriendDTO.getName());
         user.setSurname(girlfriendDTO.getSurname());
         girlfriendRepository.save(user);
-        return new ResponseEntity(user, HttpStatus.OK);
+        return "Done";
     }
 
-    @PatchMapping("/link")
-    public ResponseEntity linkUser(Long girlFriendId, Long userId) {
+    @GetMapping(path = "/date")
+    public @ResponseBody String date(Long girlFriendId, Long userId) {
         Boyfriend boyfriend = boyfriendRepository.findOne(userId);
         Girlfriend girlfriend = girlfriendRepository.findOne(girlFriendId);
         boyfriend.setGirlfriend(girlfriend);
         boyfriendRepository.save(boyfriend);
-        return new ResponseEntity(girlfriendRepository.findOne(girlFriendId), HttpStatus.I_AM_A_TEAPOT);
+        return "dating";
     }
 
 }

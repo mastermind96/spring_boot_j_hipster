@@ -11,6 +11,7 @@ import javax.persistence.*;
 public class Boyfriend {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     @Column(name = "name")

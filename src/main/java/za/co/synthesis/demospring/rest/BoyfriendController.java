@@ -30,21 +30,17 @@ public class BoyfriendController {
     @GetMapping("/all")
     public List<Boyfriend> getAllUsers() {
         System.out.println(randomUser);
-        return boyfriendRepository.findAll();
+        return (List<Boyfriend>) boyfriendRepository.findAll();
     }
 
-    @PostMapping("/add/{id}")
-    public ResponseEntity addUser(@PathVariable(name = "id") Long id, BoyfriendDTO boyfriendDTO) {
-        if (boyfriendRepository.exists(id)) {
-            return new ResponseEntity("A boyfriend with this id already exists", HttpStatus.BAD_REQUEST);
-        }
+    @GetMapping("/add")
+    public @ResponseBody String addUser(BoyfriendDTO boyfriendDTO) {
         Boyfriend boyfriend = new Boyfriend();
-        boyfriend.setId(id);
         boyfriend.setName(boyfriendDTO.getName());
         boyfriend.setSurname(boyfriendDTO.getSurname());
         boyfriend.setEmail(boyfriendDTO.getEmail());
         boyfriendRepository.save(boyfriend);
-        return new ResponseEntity(boyfriend, HttpStatus.OK);
+        return "Boyfriend Added";
     }
 
     @DeleteMapping("/delete/{id}")
